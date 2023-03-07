@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import ReactDom from 'react-dom';
+import ButtonBox from './components/ButtonBox';
+
+
+// import Display from './components/Display';
 
 function App() {
+  const [num, setNum] = useState('');
+
+  function handleClick(value, type) {
+
+    type === 'delAll' && setNum('');
+    type === 'equate'&& setNum(eval(num));
+    (type === 'operator' || type === 'operand') && setNum(num + value);
+    type === 'del' && setNum(num.toString().slice(0, -1));
+    // ? when once equate is called then it converts string into number so we have to convert it again into string to apply del
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='display'>
+    <div className='screen'>
+      {num}
     </div>
-  );
+    <ButtonBox btnPressed={handleClick}/>
+  </div>
+
+  )
 }
 
 export default App;
